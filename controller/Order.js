@@ -10,6 +10,21 @@ const postOrder = async (req, res) => {
   }
 };
 
+const deleteOrder = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedOrder = await model.findByIdAndDelete(id);
+
+    if (!deletedOrder) {
+      return res.status(404).send("Order not found");
+    }
+
+    res.send("Order deleted successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
 const getOrder = async (req, res) => {
   try {
     const data = await model.find();
@@ -37,4 +52,5 @@ module.exports = {
   postOrder,
   getOrder,
   getOrderById,
+  deleteOrder,
 };

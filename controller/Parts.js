@@ -33,8 +33,24 @@ const getPartById = async (req, res) => {
   }
 };
 
+const deletePart = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedOrder = await model.findByIdAndDelete(id);
+
+    if (!deletedOrder) {
+      return res.status(404).send("Part not found");
+    }
+
+    res.send("Order deleted successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
 module.exports = {
   postPart,
   getPart,
   getPartById,
+  deletePart,
 };

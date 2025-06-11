@@ -32,9 +32,24 @@ const getBikeById = async (req, res) => {
     res.send(err);
   }
 };
+const deleteBike = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedOrder = await model.findByIdAndDelete(id);
+
+    if (!deletedOrder) {
+      return res.status(404).send("Bike not found");
+    }
+
+    res.send("Order deleted successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
 
 module.exports = {
   postBike,
   getBike,
   getBikeById,
+  deleteBike,
 };
